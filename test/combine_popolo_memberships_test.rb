@@ -30,7 +30,7 @@ class CombinePopoloMembershipsTest < Minitest::Test
 
   def test_membership_class
     membership = CombinePopoloMemberships::Membership.new(term_memberships.first)
-    assert_equal '1998-09-26', membership.start_date
-    assert_equal '2002-09-21', membership.end_date
+    assert_equal Date.parse('1998-09-26'), membership.start_date
+    assert_equal Date.parse('2002-09-21'), membership.end_date
   end
 end
