@@ -2,16 +2,40 @@ require 'combine_popolo_memberships/version'
 
 # Takes multiple popolo membership arrays and combines them based on date.
 module CombinePopoloMemberships
-  def self.overlap(membership, term)
-    membership_start_date = membership[:start_date].to_s.empty? ? '0000-00-00' : membership[:start_date].to_s
-    membership_end_date = membership[:end_date].to_s.empty? ? '9999-99-99' : membership[:end_date].to_s
-    term_start_date = term[:start_date].to_s.empty? ? '0000-00-00' : term[:start_date].to_s
-    term_end_date = term[:end_date].to_s.empty? ? '9999-99-99' : term[:end_date].to_s
+  class Membership
+    attr_reader :data
 
-    return unless membership_start_date < term_end_date && membership_end_date > term_start_date
-    start_date, end_date = [membership_start_date, membership_end_date, term_start_date, term_end_date].sort[1, 2]
+    def initialize(data)
+      @data = data
+      @start_date = data[:start_date]
+      @end_date = data[:end_date]
+    end
+
+    def start_date
+      if @start_date.to_s.empty?
+        '0000-00-00'
+      else
+        @start_date.to_s
+      end
+    end
+
+    def end_date
+      if @end_date.to_s.empty?
+        '9999-99-99'
+      else
+        @end_date.to_s
+      end
+    end
+  end
+
+  def self.overlap(m, t)
+    membership = Membership.new(m)
+    term = Membership.new(t)
+
+    return unless membership.start_date < term.end_date && membership.end_date > term.start_date
+    start_date, end_date = [membership.start_date, membership.end_date, term.start_date, term.end_date].sort[1, 2]
     {
-      _data: [membership, term],
+      _data: [membership.data, term.data],
       start_date: start_date == '0000-00-00' ? nil : start_date,
       end_date:   end_date == '9999-99-99' ? nil : end_date
     }
