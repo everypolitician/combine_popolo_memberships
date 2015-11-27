@@ -27,10 +27,4 @@ class CombinePopoloMembershipsTest < Minitest::Test
     ]
     assert_equal expected, CombinePopoloMemberships.combine(term: term_memberships, faction_id: group_memberships)
   end
-
-  def test_membership_class
-    membership = CombinePopoloMemberships::Membership.new(term_memberships.first)
-    assert_equal Date.parse('1998-09-26'), membership.start_date
-    assert_equal Date.parse('2002-09-21'), membership.end_date
-  end
 end
