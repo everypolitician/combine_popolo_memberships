@@ -13,7 +13,7 @@ module CombinePopoloMemberships
       overlaps.map do |membership|
         data = membership.delete :_data
         membership.merge(from_name => data.first[:id], into_name => data.last[:id])
-      end.sort_by { |h| h[:start_date] }
+      end.sort_by { |h| h[:start_date].to_s }
     end
 
     private

@@ -27,4 +27,15 @@ class CombinePopoloMembershipsTest < Minitest::Test
     ]
     assert_equal expected, CombinePopoloMemberships.combine(term: term_memberships, faction_id: group_memberships)
   end
+
+  def test_combining_memberships_with_nil_dates
+    tmems = term_memberships
+    tmems.first[:start_date] = nil
+    expected = [
+      { start_date: nil, end_date: '1998-10-28', faction_id: '0', term: '2' },
+      { start_date: '1998-10-29', end_date: '2002-07-15', faction_id: '1', term: '2' },
+      { start_date: '2002-07-16', end_date: '2002-09-21', faction_id: '0', term: '2' }
+    ]
+    assert_equal expected, CombinePopoloMemberships.combine(term: tmems, faction_id: group_memberships)
+  end
 end
