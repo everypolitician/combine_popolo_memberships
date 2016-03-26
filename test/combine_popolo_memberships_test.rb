@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'date'
 
 class CombinePopoloMembershipsTest < Minitest::Test
   def test_that_it_has_a_version_number
@@ -6,25 +7,32 @@ class CombinePopoloMembershipsTest < Minitest::Test
   end
 
   def term_mems
-    @term_mems ||= [
-      { id: '2', name: '2. Národná rada 1998-2002', start_date: '1998-09-26', end_date: '2002-09-21' }
+    [
+      { id: '1', start_date: '1998-01-01', end_date: '1999-12-31', area: 'Oldville' },
+      { id: '2', start_date: '2000-01-01', end_date: '2001-12-31', area: 'Newville' }
     ]
   end
 
   def group_mems
-    @group_mems ||= [
-      { name: 'Independent', id: '0', end_date: Date.new(1998, 10, 28) },
-      { id: '1', name: 'Klub ĽS-HZDS', start_date: Date.new(1998, 10, 29), end_date: Date.new(2002, 07, 15) },
-      { name: 'Independent', id: '0', start_date: Date.new(2002, 07, 16) }
+    [
+      { id: 'White Party', start_date: '1990-01-01', end_date: '1999-05-28' },
+      { id: 'Black Party', start_date: '1999-06-01' },
+    ]
+  end
+
+  def expected_combination
+    [
+      { start_date: "1998-01-01", end_date: "1999-05-28", faction: "White Party", term: "1"},
+      { start_date: "1999-06-01", end_date: "1999-12-31", faction: "Black Party", term: "1"},
+      { start_date: "2000-01-01", end_date: "2001-12-31", faction: "Black Party", term: "2"}
     ]
   end
 
   def test_combining_memberships
-    expected = [
-      { start_date: '1998-09-26', end_date: '1998-10-28', faction_id: '0', term: '2' },
-      { start_date: '1998-10-29', end_date: '2002-07-15', faction_id: '1', term: '2' },
-      { start_date: '2002-07-16', end_date: '2002-09-21', faction_id: '0', term: '2' }
-    ]
-    assert_equal expected, CombinePopoloMemberships.combine(term: term_mems, faction_id: group_mems)
+    assert_equal expected_combination, CombinePopoloMemberships.combine(term: term_mems, faction: group_mems)
+  end
+
+  def test_combining_in_reverse
+    assert_equal expected_combination, CombinePopoloMemberships.combine(faction: group_mems, term: term_mems)
   end
 end
