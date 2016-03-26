@@ -20,8 +20,11 @@ module CombinePopoloMemberships
   def self.combine(h)
     into_name, into_data, from_name, from_data = h.flatten
     from_data.product(into_data).map { |a, b| overlap(a, b) }.compact.map do |h|
-      data = h.delete :_data
-      h.merge(from_name => data.first[:id], into_name => data.last[:id])
+      from, to = h.delete :_data
+      [from, to].each { |orig|
+        orig.each { |k, v| h[k] = v unless %i(id start_date end_date).include? k }
+      }
+      h.merge(from_name => from[:id], into_name => to[:id])
     end.sort_by { |h| h[:start_date].to_s }
   end
 end

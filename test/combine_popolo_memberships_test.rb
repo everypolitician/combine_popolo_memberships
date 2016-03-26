@@ -22,9 +22,9 @@ class CombinePopoloMembershipsTest < Minitest::Test
 
   def expected_combination
     [
-      { start_date: "1998-01-01", end_date: "1999-05-28", faction: "White Party", term: "1"},
-      { start_date: "1999-06-01", end_date: "1999-12-31", faction: "Black Party", term: "1"},
-      { start_date: "2000-01-01", end_date: "2001-12-31", faction: "Black Party", term: "2"}
+      { start_date: "1998-01-01", end_date: "1999-05-28", faction: "White Party", area: 'Oldville', term: "1"},
+      { start_date: "1999-06-01", end_date: "1999-12-31", faction: "Black Party", area: 'Oldville', term: "1"},
+      { start_date: "2000-01-01", end_date: "2001-12-31", faction: "Black Party", area: 'Newville', term: "2"}
     ]
   end
 
