@@ -1,0 +1,36 @@
+require 'test_helper'
+
+class MembershipTest < Minitest::Test
+  def start_date
+    '2015-11-27'
+  end
+
+  def end_date
+    '2015-12-31'
+  end
+
+  def test_with_known_dates
+    membership = CombinePopoloMemberships::Membership.new(start_date: start_date, end_date: end_date)
+    assert_equal '2015-11-27', membership.start_date
+    assert_equal '2015-12-31', membership.end_date
+  end
+
+  def test_with_nil
+    membership = CombinePopoloMemberships::Membership.new(start_date: nil, end_date: nil)
+    assert_equal '0000-00-00', membership.start_date
+    assert_equal '9999-99-99', membership.end_date
+  end
+
+  def test_with_empty_strings
+    membership = CombinePopoloMemberships::Membership.new(start_date: '', end_date: '')
+    assert_equal '0000-00-00', membership.start_date
+    assert_equal '9999-99-99', membership.end_date
+  end
+
+  def test_returns_original_membership
+    membership = CombinePopoloMemberships::Membership.new(start_date: '', end_date: '')
+    assert_equal({ start_date: '', end_date: '' }, membership.to_h)
+    membership2 = CombinePopoloMemberships::Membership.new(start_date: nil, end_date: nil)
+    assert_equal({ start_date: nil, end_date: nil }, membership2.to_h)
+  end
+end
