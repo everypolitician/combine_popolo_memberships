@@ -36,13 +36,14 @@ module CombinePopoloMemberships
     end
   end
 
-  def self.combine(h)
-    into_name, into_data, from_name, from_data = h.flatten
-    from_data.product(into_data).map do |from, to|
+  def self.combine(args)
+    into_name, into_data, from_name, from_data = args.flatten
+    memberships = from_data.product(into_data).map do |from, to|
       h = Membership.new(from).overlap(Membership.new(to))
       next unless h
       h.delete(:id)
       h.merge(from_name => from[:id], into_name => to[:id])
-    end.compact.sort_by { |h| h[:start_date].to_s }
+    end
+    memberships.compact.sort_by { |h| h[:start_date] }
   end
 end

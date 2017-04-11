@@ -9,7 +9,7 @@ class CombinePopoloMembershipsTest < Minitest::Test
   def term_mems
     [
       { id: '1', start_date: '1998-01-01', end_date: '1999-12-31', area: 'Oldville' },
-      { id: '2', start_date: '2000-01-01', end_date: '2001-12-31', area: 'Newville' }
+      { id: '2', start_date: '2000-01-01', end_date: '2001-12-31', area: 'Newville' },
     ]
   end
 
@@ -22,9 +22,9 @@ class CombinePopoloMembershipsTest < Minitest::Test
 
   def expected_combination
     [
-      { start_date: "1998-01-01", end_date: "1999-05-28", faction: "White Party", area: 'Oldville', term: "1"},
-      { start_date: "1999-06-01", end_date: "1999-12-31", faction: "Black Party", area: 'Oldville', term: "1"},
-      { start_date: "2000-01-01", end_date: "2001-12-31", faction: "Black Party", area: 'Newville', term: "2"}
+      { start_date: '1998-01-01', end_date: '1999-05-28', faction: 'White Party', area: 'Oldville', term: '1' },
+      { start_date: '1999-06-01', end_date: '1999-12-31', faction: 'Black Party', area: 'Oldville', term: '1' },
+      { start_date: '2000-01-01', end_date: '2001-12-31', faction: 'Black Party', area: 'Newville', term: '2' },
     ]
   end
 
