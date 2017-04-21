@@ -25,7 +25,7 @@ module CombinePopoloMemberships
     def overlap(other)
       o = date_range.overlap(other.date_range)
       return unless o
-      {}.merge(to_h).merge(other.to_h).tap do |h|
+      to_h.merge(other.to_h).tap do |h|
         h[:start_date] = o.start_date
         h[:end_date] = o.end_date
       end
