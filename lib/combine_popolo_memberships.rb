@@ -10,16 +10,6 @@ module CombinePopoloMemberships
       @membership_hash = membership_hash
     end
 
-    def start_date
-      @start_date ||=
-        membership_hash[:start_date].to_s.empty? ? '0000-00-00' : membership_hash[:start_date].to_s
-    end
-
-    def end_date
-      @end_date ||=
-        membership_hash[:end_date].to_s.empty? ? '9999-99-99' : membership_hash[:end_date].to_s
-    end
-
     def date_range
       @date_range ||= DateRange.new(start_date, end_date)
     end
@@ -31,6 +21,18 @@ module CombinePopoloMemberships
         h[:start_date] = o.start_date
         h[:end_date] = o.end_date
       end
+    end
+
+    private
+
+    def start_date
+      @start_date ||=
+        membership_hash[:start_date].to_s.empty? ? '0000-00-00' : membership_hash[:start_date].to_s
+    end
+
+    def end_date
+      @end_date ||=
+        membership_hash[:end_date].to_s.empty? ? '9999-99-99' : membership_hash[:end_date].to_s
     end
   end
 
