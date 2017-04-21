@@ -4,16 +4,18 @@ require 'date-range'
 # Takes multiple popolo membership arrays and combines them based on date.
 module CombinePopoloMemberships
   class Membership
-    def initialize(raw)
-      @raw = raw
+    def initialize(membership_hash)
+      @membership_hash = membership_hash
     end
 
     def start_date
-      @start_date ||= raw[:start_date].to_s.empty? ? '0000-00-00' : raw[:start_date].to_s
+      @start_date ||=
+        membership_hash[:start_date].to_s.empty? ? '0000-00-00' : membership_hash[:start_date].to_s
     end
 
     def end_date
-      @end_date ||= raw[:end_date].to_s.empty? ? '9999-99-99' : raw[:end_date].to_s
+      @end_date ||=
+        membership_hash[:end_date].to_s.empty? ? '9999-99-99' : membership_hash[:end_date].to_s
     end
 
     def date_range
@@ -30,12 +32,12 @@ module CombinePopoloMemberships
     end
 
     def to_h
-      raw
+      membership_hash
     end
 
     private
 
-    attr_reader :raw
+    attr_reader :membership_hash
   end
 
   def self.combine(h)
