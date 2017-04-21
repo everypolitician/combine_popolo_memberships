@@ -1,16 +1,8 @@
 require 'test_helper'
 
 class MembershipTest < Minitest::Test
-  def start_date
-    '2015-11-27'
-  end
-
-  def end_date
-    '2015-12-31'
-  end
-
   def test_with_known_dates
-    membership = CombinePopoloMemberships::Membership.new(start_date: start_date, end_date: end_date)
+    membership = CombinePopoloMemberships::Membership.new(start_date: '2015-11-27', end_date: '2015-12-31')
     assert_equal '2015-11-27', membership.start_date
     assert_equal '2015-12-31', membership.end_date
   end
