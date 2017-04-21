@@ -4,6 +4,8 @@ require 'date-range'
 # Takes multiple popolo membership arrays and combines them based on date.
 module CombinePopoloMemberships
   class Membership
+    attr_reader :membership_hash
+
     def initialize(membership_hash)
       @membership_hash = membership_hash
     end
@@ -25,19 +27,11 @@ module CombinePopoloMemberships
     def overlap(other)
       o = date_range.overlap(other.date_range)
       return unless o
-      to_h.merge(other.to_h).tap do |h|
+      membership_hash.merge(other.membership_hash).tap do |h|
         h[:start_date] = o.start_date
         h[:end_date] = o.end_date
       end
     end
-
-    def to_h
-      membership_hash
-    end
-
-    private
-
-    attr_reader :membership_hash
   end
 
   def self.combine(h)

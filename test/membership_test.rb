@@ -29,8 +29,8 @@ class MembershipTest < Minitest::Test
 
   def test_returns_original_membership
     membership = CombinePopoloMemberships::Membership.new(start_date: '', end_date: '')
-    assert_equal({ start_date: '', end_date: '' }, membership.to_h)
+    assert_equal({ start_date: '', end_date: '' }, membership.membership_hash)
     membership2 = CombinePopoloMemberships::Membership.new(start_date: nil, end_date: nil)
-    assert_equal({ start_date: nil, end_date: nil }, membership2.to_h)
+    assert_equal({ start_date: nil, end_date: nil }, membership2.membership_hash)
   end
 end
